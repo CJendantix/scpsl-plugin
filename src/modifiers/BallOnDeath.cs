@@ -15,22 +15,9 @@ using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
 public sealed class BallOnDeath : Modifier
 {
-    private static BallOnDeath instance = null;
+    public static BallOnDeath Instance = new BallOnDeath();
 
     private BallOnDeath() { }
-
-    public static BallOnDeath Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new BallOnDeath();
-            }
-
-            return instance;
-        }
-    }
 
     private static readonly ThrowableItem SCP018;
 
