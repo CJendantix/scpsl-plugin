@@ -56,7 +56,6 @@ public sealed class BallOnDeath : Modifier
 
         projectile.Info = psi;
         projectile.PreviousOwner = new Footprint(player.ReferenceHub);
-        projectile.;
         NetworkServer.Spawn(projectile.gameObject);
     }
 
