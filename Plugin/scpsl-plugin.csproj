@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>scpsl_plugin</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp" HintPath="./external/Assembly-CSharp.dll" Publicize="true" />
+		<Reference Include="Assembly-CSharp-firstpass" HintPath="./external/Assembly-CSharp-firstpass.dll" />
+		<Reference Include="CommandSystem.Core" HintPath="./external/CommandSystem.Core.dll" />
+		<Reference Include="Mirror" HintPath="./external/Mirror.dll" />
+		<Reference Include="Pooling" HintPath="./external/Pooling.dll" />
+		<Reference Include="UnityEngine" HintPath="./external/UnityEngine.dll" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="./external/UnityEngine.PhysicsModule.dll" />
+		<Reference Include="UnityEngine.CoreModule" HintPath="./external/UnityEngine.CoreModule.dll" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Northwood.LabAPI" Version="1.1.4" />
+		<PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>
