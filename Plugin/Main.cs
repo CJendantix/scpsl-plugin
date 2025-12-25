@@ -29,7 +29,6 @@ public class Main : Plugin<Configuration>
 
         foreach (var m in Modifier.Modifiers)
         {
-            Logger.Info("test: " + m.Name);
             m.LoadConfig(Config);
         }
     }
