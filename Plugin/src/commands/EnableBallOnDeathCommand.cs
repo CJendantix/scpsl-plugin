@@ -42,7 +42,6 @@ public class ChangeDefaultGravityCommand : ICommand
             {
                 BallOnDeath.Instance.Disable();
             }
-            ;
 
             response = (enable ? "Enabled Modifier: " : "Disabled Modifier: ") + "BallOnDeath";
 
