@@ -25,4 +25,10 @@
 		<PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+  <ProjectReference Include="..\Generator\Generator.csproj"
+                    OutputItemType="Analyzer"
+                    ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
 </Project>

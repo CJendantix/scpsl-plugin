@@ -13,11 +13,12 @@ using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
+[AutoModifier(nameof(Instance))]
 public sealed class BallOnDeath : Modifier
 {
-    public static BallOnDeath Instance = new BallOnDeath();
+    public static BallOnDeath Instance { get; } = new BallOnDeath();
 
-    private BallOnDeath() { }
+    private BallOnDeath() {}
 
     private static readonly ThrowableItem SCP018;
 

@@ -23,10 +23,13 @@ public class Main : Plugin<Configuration>
 
     public override void Enable()
     {
+        GeneratedModifierLoader.LoadAll();
+
         ServerEvents.Shutdown += SaveAllConfigs;
 
         foreach (var m in Modifier.Modifiers)
         {
+            Logger.Info("test: " + m.Name);
             m.LoadConfig(Config);
         }
     }
