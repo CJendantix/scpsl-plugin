@@ -64,6 +64,9 @@ public sealed class BallOnDeath : Modifier
 
     public override void LoadConfig(Configuration config)
     {
+        if (config.BallOnDeath.Enable) {
+            Enable();
+        }
         Force = config.BallOnDeath.LaunchForce;
     }
 

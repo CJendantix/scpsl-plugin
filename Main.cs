@@ -28,8 +28,6 @@ public class Main : Plugin<Configuration>
         foreach (var m in Modifier.Modifiers)
         {
             m.LoadConfig(Config);
-            if (m.IsEnabled)
-                m.Enable();
         }
     }
 
