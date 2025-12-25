@@ -55,7 +55,7 @@ public sealed class BallOnDeath : Modifier
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            // Example: throw forward from the player's perspective
+            // Throw forward from the player's perspective
             Vector3 forward = player.ReferenceHub.transform.forward;
             rb.linearVelocity = forward * force;
         }
