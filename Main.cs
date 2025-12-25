@@ -35,8 +35,10 @@ public class Main : Plugin<Configuration>
 
     public override void Disable()
     {
-        foreach (var m in Modifier.Modifiers)
+        foreach (var m in Modifier.Modifiers) {
+            m.SaveConfig(Config);
             m.Disable();
+        }
     }
 
     private void SaveAllConfigs()
