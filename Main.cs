@@ -21,45 +21,29 @@ public class Main : Plugin<Configuration>
     // The required version of LabAPI (usually the version the plugin was built with)
     public override Version RequiredApiVersion { get; } = new Version(LabApiProperties.CompiledVersion);
 
-    private void EnableModifiers()
-    {
-        if (Config.BallOnDeath.Enable)
-        {
-            BallOnDeath.Instance.Enable();
-        }
-    }
-
-    private void DisableModifiers()
-    {
-        foreach (var modifier in Modifier.Modifiers) {
-            if (modifier.IsEnabled) {
-                modifier.Disable();
-            }
-        }
-    }
-
-    private void LoadConfig()
-    {
-        BallOnDeath.Instance.Force = Config.BallOnDeath.LaunchForce;
-    }
-
-    private void UpdateConfig()
-    {
-        Config.BallOnDeath.Enable = BallOnDeath.Instance.IsEnabled;
-        Config.BallOnDeath.LaunchForce = BallOnDeath.Instance.Force;
-        SaveConfig();
-    }
-
     public override void Enable()
     {
-        ServerEvents.Shutdown += UpdateConfig;
+        ServerEvents.Shutdown += SaveAllConfigs;
 
-        LoadConfig();
-        EnableModifiers();
+        foreach (var m in Modifier.Modifiers)
+        {
+            m.LoadConfig(Config);
+            if (m.IsEnabled)
+                m.Enable();
+        }
     }
 
     public override void Disable()
     {
-        DisableModifiers();
+        foreach (var m in Modifier.Modifiers)
+            m.Disable();
+    }
+
+    private void SaveAllConfigs()
+    {
+        foreach (var m in Modifier.Modifiers)
+            m.SaveConfig(Config);
+
+        SaveConfig();
     }
 }

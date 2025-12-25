@@ -14,6 +14,9 @@ public abstract class Modifier : CustomEventsHandler
 
     public abstract string Name { get; }
 
+    public abstract void LoadConfig(Configuration config);
+    public abstract void SaveConfig(Configuration config);
+
     public void Enable()
     {
         Logger.Info("Enabling Modifier " + this.Name);

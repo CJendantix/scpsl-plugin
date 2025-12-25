@@ -74,4 +74,15 @@ public sealed class BallOnDeath : Modifier
     {
         ThrowSCP018(ev.Player, Force);
     }
+
+    public override void LoadConfig(Configuration config)
+    {
+        Force = config.BallOnDeath.LaunchForce;
+    }
+
+    public override void SaveConfig(Configuration config)
+    {
+        config.BallOnDeath.Enable = IsEnabled;
+        config.BallOnDeath.LaunchForce = Force;
+    }
 }
