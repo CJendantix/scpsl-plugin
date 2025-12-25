@@ -4,7 +4,7 @@ using LabApi.Features;
 using LabApi.Features.Console;
 using LabApi.Loader.Features.Plugins;
 
-public class CJsModifiers : Plugin<Configuration>
+public class Main : Plugin<Configuration>
 {
     // The name of the plugin
     public override string Name { get; } = "CJ's Modifiers";
