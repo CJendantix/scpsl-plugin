@@ -6,7 +6,7 @@ using CommandSystem;
 [CommandHandler(typeof(GameConsoleCommandHandler))]
 public class SetBallOnDeathForceCommand : ICommand
 {
-    public string Command => "modifiers_ballondeath_set_force";
+    public string Command => "modifiers_config_ballondeath_set_force";
 
     public string[] Aliases => new string[] { };
 

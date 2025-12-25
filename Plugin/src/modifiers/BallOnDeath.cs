@@ -34,6 +34,7 @@ public sealed class BallOnDeath : Modifier
     public override string Name => "BallOnDeath";
 
     public float Force { get; set; } = 0;
+    public float PercentChance { get; set; } = 0;
 
     private void ThrowSCP018(Player player, float force)
     {
@@ -55,11 +56,15 @@ public sealed class BallOnDeath : Modifier
 
         projectile.Info = psi;
         projectile.PreviousOwner = new Footprint(player.ReferenceHub);
+        projectile.;
         NetworkServer.Spawn(projectile.gameObject);
     }
 
     public override void OnPlayerDying(PlayerDyingEventArgs ev)
     {
+        if (Random.value >= PercentChance / 100)
+            return;
+
         ThrowSCP018(ev.Player, Force);
     }
 
@@ -69,11 +74,13 @@ public sealed class BallOnDeath : Modifier
             Enable();
         }
         Force = config.BallOnDeath.LaunchForce;
+        PercentChance = config.BallOnDeath.PercentChance;
     }
 
     public override void SaveConfig(Configuration config)
     {
         config.BallOnDeath.Enable = IsEnabled;
         config.BallOnDeath.LaunchForce = Force;
+        config.BallOnDeath.PercentChance = PercentChance;
     }
 }
