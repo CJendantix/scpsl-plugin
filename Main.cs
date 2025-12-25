@@ -31,8 +31,11 @@ public class CJsModifiers : Plugin<Configuration>
 
     private void DisableModifiers()
     {
-        if (BallOnDeath.Instance.IsEnabled == true)
-            BallOnDeath.Instance.Disable();
+        foreach (var modifier in Modifier.Modifiers) {
+            if (modifier.IsEnabled) {
+                modifier.Disable();
+            }
+        }
     }
 
     private void LoadConfig()

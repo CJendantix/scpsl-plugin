@@ -4,6 +4,12 @@ using LabApi.Features.Console;
 
 public abstract class Modifier : CustomEventsHandler
 {
+    public static List<Modifier> Modifiers { get; } = new List<Modifier>();
+
+    protected Modifier() {
+        Modifiers.Add(this);
+    }
+
     public bool IsEnabled { get; protected set; } = false;
 
     public abstract string Name { get; }
