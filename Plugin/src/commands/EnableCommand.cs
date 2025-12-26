@@ -40,7 +40,7 @@ public class EnableCommand : ICommand
                 return false;
             }
             
-            BallOnDeath.Instance.Enable();
+            modifier.Enable();
 
             response = "Enabled Modifier: " + modifier.Name;
 
