@@ -1,24 +1,30 @@
 using LabApi.Events.Arguments.PlayerEvents;
+using modifiers;
 using PlayerRoles;
 
-[AutoModifier]
-public sealed partial class Blackout : Modifier
+namespace modifiers.modifiers
 {
-    public override string Name => "Blackout";
 
-    public override void OnServerRoundStarted()
+    [AutoModifier]
+    public sealed partial class Blackout : Modifier
     {
-        foreach (RoomLightController instance in RoomLightController.Instances)
+        public override string Name => "Blackout";
+
+        public override void OnServerRoundStarted()
         {
-            instance.ServerFlickerLights(1000000000);
+            foreach (RoomLightController instance in RoomLightController.Instances)
+            {
+                instance.ServerFlickerLights(1000000000);
+            }
+        }
+
+        public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
+        {
+            if (!ev.NewRole.RoleTypeId.IsHuman())
+                return;
+
+            ev.Player.AddItem(ItemType.Flashlight);
         }
     }
 
-    public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
-    {
-        if (!ev.NewRole.RoleTypeId.IsHuman())
-            return;
-
-        ev.Player.AddItem(ItemType.Flashlight);
-    }
 }

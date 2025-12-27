@@ -4,29 +4,35 @@ using System.Linq;
 using CommandSystem;
 using InventorySystem.Items.Firearms.Modules;
 
-[CommandHandler(typeof(RemoteAdminCommandHandler))]
-[CommandHandler(typeof(GameConsoleCommandHandler))]
-public class ListCommand : ICommand
+namespace modifiers.commands
 {
-    public string Command => "modifiers_list";
 
-    public string[] Aliases => new string[] { };
-
-    public string Description => "Lists valid modifiers";
-
-    public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+    [CommandHandler(typeof(RemoteAdminCommandHandler))]
+    [CommandHandler(typeof(GameConsoleCommandHandler))]
+    public class ListCommand : ICommand
     {
-        if (sender.CheckPermission(PlayerPermissions.FacilityManagement))
+        public string Command => "modifiers_list";
+
+        public string[] Aliases => new string[] { };
+
+        public string Description => "Lists valid modifiers";
+
+        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            response = "Valid Modifiers:";
-            foreach (var m in Modifier.Modifiers) {
-                response += "\n - " + m.Name;
+            if (sender.CheckPermission(PlayerPermissions.FacilityManagement))
+            {
+                response = "Valid Modifiers:";
+                foreach (var m in Modifier.Modifiers)
+                {
+                    response += "\n - " + m.Name;
+                }
+
+                return true;
             }
 
-            return true;
+            response = "You don't have enough permission to run this command";
+            return false;
         }
-
-        response = "You don't have enough permission to run this command";
-        return false;
     }
+
 }

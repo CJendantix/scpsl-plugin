@@ -2,54 +2,60 @@ using System;
 using System.Linq;
 using CommandSystem;
 
-[CommandHandler(typeof(RemoteAdminCommandHandler))]
-[CommandHandler(typeof(GameConsoleCommandHandler))]
-public class EnableCommand : ICommand, IUsageProvider
+namespace modifiers.commands
 {
-    public string Command => "modifiers_enable";
 
-    public string[] Aliases => new string[] { };
-
-    public string Description => "Enables a modifier";
-
-    public string[] Usage => new string[] { "Modifier Name" };
-
-    public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+    [CommandHandler(typeof(RemoteAdminCommandHandler))]
+    [CommandHandler(typeof(GameConsoleCommandHandler))]
+    public class EnableCommand : ICommand, IUsageProvider
     {
-        if (sender.CheckPermission(PlayerPermissions.FacilityManagement))
+        public string Command => "modifiers_enable";
+
+        public string[] Aliases => new string[] { };
+
+        public string Description => "Enables a modifier";
+
+        public string[] Usage => new string[] { "Modifier Name" };
+
+        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (arguments.Count != 1)
+            if (sender.CheckPermission(PlayerPermissions.FacilityManagement))
             {
-                response = "Please provide the name of which modifier to enable. List modifiers with modifiers_list.";
-                return false;
-            }
-            
-            Modifier modifier = null;
-            foreach (var m in Modifier.Modifiers) {
-                if (arguments.ElementAt(0) == m.Name)
-                    modifier = m;
+                if (arguments.Count != 1)
+                {
+                    response = "Please provide the name of which modifier to enable. List modifiers with modifiers_list.";
+                    return false;
+                }
+
+                Modifier modifier = null;
+                foreach (var m in Modifier.Modifiers)
+                {
+                    if (arguments.ElementAt(0) == m.Name)
+                        modifier = m;
+                }
+
+                if (modifier == null)
+                {
+                    response = "Invalid modifier name provided. List valid modifiers with modifiers_list.";
+                    return false;
+                }
+
+                if (modifier.IsEnabled)
+                {
+                    response = modifier.Name + " is already enabled.";
+                    return false;
+                }
+
+                modifier.Enable();
+
+                response = "Enabled Modifier: " + modifier.Name;
+
+                return true;
             }
 
-            if (modifier == null)
-            {
-                response = "Invalid modifier name provided. List valid modifiers with modifiers_list.";
-                return false;
-            }
-
-            if (modifier.IsEnabled)
-            {
-                response = modifier.Name + " is already enabled.";
-                return false;
-            }
-            
-            modifier.Enable();
-
-            response = "Enabled Modifier: " + modifier.Name;
-
-            return true;
+            response = "You don't have enough permission to run this command";
+            return false;
         }
-
-        response = "You don't have enough permission to run this command";
-        return false;
     }
+
 }

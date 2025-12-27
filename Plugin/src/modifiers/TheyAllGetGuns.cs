@@ -1,17 +1,23 @@
 using LabApi.Events.Arguments.PlayerEvents;
 using LabApi.Features.Extensions;
+using modifiers;
 
-[AutoModifier]
-public sealed partial class TheyAllGetGuns : Modifier
+namespace modifiers.modifiers
 {
-    public override string Name => "TheyAllGetGuns";
 
-    public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
+    [AutoModifier]
+    public sealed partial class TheyAllGetGuns : Modifier
     {
-        if (ev.NewRole.RoleTypeId.IsMilitary())
-            return;
+        public override string Name => "TheyAllGetGuns";
 
-        ev.Player.AddItem(ItemType.GunCOM15);
-        ev.Player.AddAmmo(ItemType.Ammo9x19, 12);
+        public override void OnPlayerChangedRole(PlayerChangedRoleEventArgs ev)
+        {
+            if (ev.NewRole.RoleTypeId.IsMilitary())
+                return;
+
+            ev.Player.AddItem(ItemType.GunCOM15);
+            ev.Player.AddAmmo(ItemType.Ammo9x19, 12);
+        }
     }
+
 }
