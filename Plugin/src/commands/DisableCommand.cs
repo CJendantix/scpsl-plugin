@@ -4,13 +4,15 @@ using CommandSystem;
 
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
 [CommandHandler(typeof(GameConsoleCommandHandler))]
-public class DisableCommand : ICommand
+public class DisableCommand : ICommand, IUsageProvider
 {
     public string Command => "modifiers_disable";
 
     public string[] Aliases => new string[] { };
 
     public string Description => "Disables a modifier";
+
+    public string[] Usage => new string[] { "Modifier Name" };
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {

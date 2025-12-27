@@ -4,13 +4,15 @@ using CommandSystem;
 
 [CommandHandler(typeof(RemoteAdminCommandHandler))]
 [CommandHandler(typeof(GameConsoleCommandHandler))]
-public class EnableCommand : ICommand
+public class EnableCommand : ICommand, IUsageProvider
 {
     public string Command => "modifiers_enable";
 
     public string[] Aliases => new string[] { };
 
     public string Description => "Enables a modifier";
+
+    public string[] Usage => new string[] { "Modifier Name" };
 
     public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
