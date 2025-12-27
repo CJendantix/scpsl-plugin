@@ -1,5 +1,3 @@
-
-
 using Footprinting;
 using InventorySystem;
 using InventorySystem.Items;
@@ -16,35 +14,33 @@ using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 [AutoModifier(nameof(Instance))]
 public sealed class BallOnDeath : Modifier
 {
-    public static BallOnDeath Instance { get; } = new BallOnDeath();
-
-    private BallOnDeath() {}
-
     private static readonly ThrowableItem SCP018;
 
     static BallOnDeath()
     {
-        // ItemType.SCP018 is a ThrowableItem
         var succeeded = InventoryItemLoader.TryGetItem(ItemType.SCP018, out ThrowableItem item);
         Assert.IsTrue(succeeded);
-
         SCP018 = item;
     }
 
+    public static BallOnDeath Instance { get; } = new BallOnDeath();
+    private BallOnDeath() { }
+
     public override string Name => "BallOnDeath";
 
-    public float Force { get; set; } = 0;
-    public float PercentChance { get; set; } = 0;
+    [Configurable(Description = "Force applied to SCP-018", Default = 75f)]
+    public float LaunchForce { get; set; }
+
+    [Configurable(Description = "Chance percent", Default = 50f)]
+    public float PercentChance { get; set; }
 
     private void ThrowSCP018(Player player, float force)
     {
         ThrownProjectile projectile = Object.Instantiate(SCP018.Projectile, player.Position, player.Rotation);
 
-        // Add initial velocity here
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            // Throw forward from the player's perspective
             Vector3 forward = player.ReferenceHub.transform.forward;
             rb.linearVelocity = forward * force;
         }
@@ -61,25 +57,9 @@ public sealed class BallOnDeath : Modifier
 
     public override void OnPlayerDying(PlayerDyingEventArgs ev)
     {
-        if (Random.value >= PercentChance / 100)
+        if (Random.value >= PercentChance / 100f)
             return;
 
-        ThrowSCP018(ev.Player, Force);
-    }
-
-    public override void LoadConfig(Configuration config)
-    {
-        if (config.BallOnDeath.Enable) {
-            Enable();
-        }
-        Force = config.BallOnDeath.LaunchForce;
-        PercentChance = config.BallOnDeath.PercentChance;
-    }
-
-    public override void SaveConfig(Configuration config)
-    {
-        config.BallOnDeath.Enable = IsEnabled;
-        config.BallOnDeath.LaunchForce = Force;
-        config.BallOnDeath.PercentChance = PercentChance;
+        ThrowSCP018(ev.Player, LaunchForce);
     }
 }

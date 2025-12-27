@@ -6,28 +6,37 @@ public abstract class Modifier : CustomEventsHandler
 {
     public static List<Modifier> Modifiers { get; } = new List<Modifier>();
 
-    protected Modifier() {
+    protected Modifier()
+    {
         Modifiers.Add(this);
     }
 
-    public bool IsEnabled { get; protected set; } = false;
+    public bool IsEnabled { get; private set; }
 
     public abstract string Name { get; }
 
-    public abstract void LoadConfig(Configuration config);
-    public abstract void SaveConfig(Configuration config);
-
     public void Enable()
     {
-        Logger.Info("Enabling Modifier " + this.Name);
+        if (IsEnabled)
+            return;
+
+        Logger.Info("Enabling Modifier " + Name);
         CustomHandlersManager.RegisterEventsHandler(this);
         IsEnabled = true;
+        OnEnabled();
     }
 
     public void Disable()
     {
-        Logger.Info("Disabling Modifier " + this.Name);
+        if (!IsEnabled)
+            return;
+
+        Logger.Info("Disabling Modifier " + Name);
         CustomHandlersManager.UnregisterEventsHandler(this);
         IsEnabled = false;
+        OnDisabled();
     }
+
+    protected virtual void OnEnabled() { }
+    protected virtual void OnDisabled() { }
 }

@@ -28,7 +28,7 @@ public class SetBallOnDeathForceCommand : ICommand
                 return false;
             }
 
-            BallOnDeath.Instance.Force = force;
+            BallOnDeath.Instance.LaunchForce = force;
             response = "Set Force to " + force.ToString();
 
             return true;
