@@ -1,11 +1,9 @@
 using LabApi.Events.Arguments.PlayerEvents;
 using PlayerRoles;
 
-[AutoModifier(nameof(Instance))]
-public sealed class Blackout : Modifier
+[AutoModifier]
+public sealed partial class Blackout : Modifier
 {
-    public static Blackout Instance { get; } = new Blackout();
-
     public override string Name => "Blackout";
 
     public override void OnServerRoundStarted()

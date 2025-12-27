@@ -11,8 +11,8 @@ using UnityEngine.Assertions;
 using Object = UnityEngine.Object;
 using ThrowableItem = InventorySystem.Items.ThrowableProjectiles.ThrowableItem;
 
-[AutoModifier(nameof(Instance))]
-public sealed class BallOnDeath : Modifier
+[AutoModifier]
+public sealed partial class BallOnDeath : Modifier
 {
     private static readonly ThrowableItem SCP018;
 
@@ -23,7 +23,6 @@ public sealed class BallOnDeath : Modifier
         SCP018 = item;
     }
 
-    public static BallOnDeath Instance { get; } = new BallOnDeath();
     private BallOnDeath() { }
 
     public override string Name => "BallOnDeath";
